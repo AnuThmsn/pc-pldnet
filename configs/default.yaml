@@ -1,0 +1,86 @@
+# PC-PLDNet Default Configuration
+# Physics-Consistent PLD-Conditioned Network for ASL CBF and ATT Estimation
+
+# ── Physics constants (from repository data_gen.py) ──
+physics:
+  plds: [1.525, 2.025, 2.525, 3.025]  # seconds
+  tau: 1.8         # labeling duration (s)
+  T1t: 1.2         # tissue T1 (s)
+  T1a: 1.66        # arterial blood T1 (s)
+  alpha: 0.85       # labeling efficiency
+  beta: 0.75        # background suppression
+  lmbda: 0.9        # blood-brain partition coefficient (mL/g)
+  SCALE: 100000.0   # signal scaling factor
+  SIG_REF_SC: 334.2039  # reference signal for SNR
+
+# ── Target ranges ──
+targets:
+  CBF_MIN: 0.0
+  CBF_MAX: 100.0
+  ATT_MIN: 0.5
+  ATT_MAX: 3.0
+
+# ── Dataset ──
+dataset:
+  N_TRAIN: 300000
+  N_VAL:   50000
+  N_TEST:  50000
+  N_NOISE_LEVELS_TRAIN: 100
+  N_NOISE_LEVELS_VAL:   100
+  N_NOISE_LEVELS_TEST:  51
+  seed_train: 42
+  seed_val:   99
+  seed_test:  7
+
+# ── Model architecture ──
+model:
+  # Module A: PLD-conditioned encoder
+  pld_embed_dim: 16          # PLD positional embedding dimension
+  signal_embed_dim: 32       # per-signal feature dimension
+  token_dim: 48              # pld_embed_dim + signal_embed_dim = token_dim
+
+  # Module B: 1D Conv feature extractor
+  conv_channels: [48, 64]    # 1D conv channel progression
+  conv_kernel_size: 3        # kernel size (will be padded)
+
+  # Module C: Cross-PLD attention
+  attn_heads: 4
+  attn_dim: 64               # attention feature dimension
+  attn_dropout: 0.05
+
+  # Module D: Shared MLP
+  shared_hidden: [128, 64]
+  shared_dropout: 0.1
+
+  # Module E: Output heads
+  cbf_head_hidden: [32]
+  att_head_hidden: [32]
+
+# ── Training ──
+training:
+  optimizer: AdamW
+  lr: 0.001
+  weight_decay: 0.00001
+  batch_size: 512
+  max_epochs: 100
+  early_stopping_patience: 12
+  scheduler: ReduceLROnPlateau
+  scheduler_factor: 0.5
+  scheduler_patience: 5
+  scheduler_min_lr: 0.000001
+  regression_loss: SmoothL1
+  smoothl1_beta: 1.0
+
+  # Physics loss
+  physics_lambda: 0.01       # weight for physics-consistency loss
+
+  # ATT loss weight
+  att_loss_weight: 2.0        # w_ATT in L_total
+
+  seed: 42
+  grad_clip: 1.0
+
+# ── Evaluation ──
+evaluation:
+  snr_levels: [10, 15, 20]
+
