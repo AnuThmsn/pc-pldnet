@@ -1,0 +1,70 @@
+dataset:
+  N_NOISE_LEVELS_TEST: 51
+  N_NOISE_LEVELS_TRAIN: 100
+  N_NOISE_LEVELS_VAL: 100
+  N_TEST: 50000
+  N_TRAIN: 300000
+  N_VAL: 50000
+  seed_test: 7
+  seed_train: 42
+  seed_val: 99
+evaluation:
+  model_dir: diagnostics/rebalanced/final
+  output_dir: diagnostics/ablations/E_rebalanced/experiments
+model:
+  att_head_hidden:
+  - 32
+  attn_dim: 64
+  attn_dropout: 0.05
+  attn_heads: 4
+  cbf_head_hidden:
+  - 32
+  conv_channels:
+  - 48
+  - 64
+  conv_kernel_size: 3
+  pld_embed_dim: 16
+  shared_dropout: 0.1
+  shared_hidden:
+  - 128
+  - 64
+  signal_embed_dim: 32
+  token_dim: 48
+physics:
+  SCALE: 100000.0
+  SIG_REF_SC: 334.2039
+  T1a: 1.66
+  T1t: 1.2
+  alpha: 0.85
+  beta: 0.75
+  lmbda: 0.9
+  plds:
+  - 1.525
+  - 2.025
+  - 2.525
+  - 3.025
+  tau: 1.8
+targets:
+  ATT_MAX: 3.0
+  ATT_MIN: 0.5
+  CBF_MAX: 100.0
+  CBF_MIN: 0.0
+training:
+  att_loss_weight: 40.0
+  batch_size: 512
+  early_stopping_patience: 12
+  grad_clip: 1.0
+  lr: 0.001
+  max_epochs: 100
+  optimizer: AdamW
+  output_dir: diagnostics/ablations/E_rebalanced
+  physics_lambda: 0.5
+  physics_loss_type: L1
+  regression_loss: L1
+  scheduler: ReduceLROnPlateau
+  scheduler_factor: 0.5
+  scheduler_min_lr: 1.0e-06
+  scheduler_patience: 5
+  seed: 42
+  smoothl1_beta: 1.0
+  weight_decay: 1.0e-05

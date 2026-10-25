@@ -1,0 +1,75 @@
+{
+  "dual_rician_bias_analysis": [
+    {
+      "snr_bin": "< 7.5 (Low SNR)",
+      "n_samples": 2481,
+      "mean_clean_signal": 151.9814453125,
+      "assumed_observation (2*S)": 303.962890625,
+      "actual_mean_observation (mc+ml)": 331.186279296875,
+      "rician_excess_bias (obs - 2*S)": 27.223363876342773,
+      "relative_excess_percent": 8.956147186374592
+    },
+    {
+      "snr_bin": "[7.5, 12.5) (~10)",
+      "n_samples": 977,
+      "mean_clean_signal": 327.6412353515625,
+      "assumed_observation (2*S)": 655.282470703125,
+      "actual_mean_observation (mc+ml)": 661.9722900390625,
+      "rician_excess_bias (obs - 2*S)": 6.689779758453369,
+      "relative_excess_percent": 1.0209001549017698
+    },
+    {
+      "snr_bin": "[12.5, 17.5) (~15)",
+      "n_samples": 422,
+      "mean_clean_signal": 327.0606994628906,
+      "assumed_observation (2*S)": 654.1213989257812,
+      "actual_mean_observation (mc+ml)": 655.7482299804688,
+      "rician_excess_bias (obs - 2*S)": 1.6267485618591309,
+      "relative_excess_percent": 0.24869214866389935
+    },
+    {
+      "snr_bin": "[17.5, 25.0) (~20)",
+      "n_samples": 300,
+      "mean_clean_signal": 320.2031555175781,
+      "assumed_observation (2*S)": 640.4063110351562,
+      "actual_mean_observation (mc+ml)": 641.6968994140625,
+      "rician_excess_bias (obs - 2*S)": 1.290585994720459,
+      "relative_excess_percent": 0.20152612060211383
+    },
+    {
+      "snr_bin": ">= 25.0 (High SNR)",
+      "n_samples": 597,
+      "mean_clean_signal": 334.02825927734375,
+      "assumed_observation (2*S)": 668.0565185546875,
+      "actual_mean_observation (mc+ml)": 668.273681640625,
+      "rician_excess_bias (obs - 2*S)": 0.2171642929315567,
+      "relative_excess_percent": 0.032506874328739443
+    }
+  ],
+  "gradient_norm_measurements": {
+    "Original_Objective (SmoothL1, w=2, lam=0.01)": {
+      "mean_loss_cbf": 2.965035557746887,
+      "mean_loss_att_unweighted": 0.0645203772932291,
+      "mean_loss_physics_unweighted": 0.1173859997652471,
+      "shared_trunk_grad_norm_CBF": 2.6072205662727357,
+      "shared_trunk_grad_norm_ATT": 0.2113141566514969,
+      "shared_trunk_grad_norm_Physics": 0.003591017029248178,
+      "cbf_head_grad_norm": 3.6898705124855042,
+      "att_head_grad_norm": 0.11409694626927376,
+      "trunk_CBF_to_ATT_gradient_ratio": 12.338125406992008,
+      "trunk_Physics_to_Supervised_ratio": 0.0012740723042769851
+    },
+    "Rebalanced_Objective (L1, w=40, lam=0.5)": {
+      "mean_loss_cbf": 3.3957449436187743,
+      "mean_loss_att_unweighted": 0.2640063190460205,
+      "mean_loss_physics_unweighted": 0.11913426667451858,
+      "shared_trunk_grad_norm_CBF": 3.7834356307983397,
+      "shared_trunk_grad_norm_ATT": 17.75408802032471,
+      "shared_trunk_grad_norm_Physics": 0.1826975092291832,
+      "cbf_head_grad_norm": 5.212211418151855,
+      "att_head_grad_norm": 9.032759642601013,
+      "trunk_CBF_to_ATT_gradient_ratio": 0.21310222335530776,
+      "trunk_Physics_to_Supervised_ratio": 0.008482753736584215
+    }
+  }
+}

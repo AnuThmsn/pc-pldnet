@@ -40,6 +40,7 @@ def train_one_epoch(model, loader, criterion, optimizer, device, grad_clip=1.0):
     total_loss = 0.0
     loss_components = {'L_CBF': 0, 'L_ATT': 0, 'L_physics': 0, 'L_total': 0}
     n_batches = 0
+    n_clipped = 0
 
     for x_batch, y_batch in loader:
         x_batch = x_batch.to(device, non_blocking=True)
@@ -52,7 +53,9 @@ def train_one_epoch(model, loader, criterion, optimizer, device, grad_clip=1.0):
 
         loss.backward()
         if grad_clip > 0:
-            nn.utils.clip_grad_norm_(model.parameters(), grad_clip)
+            norm = nn.utils.clip_grad_norm_(model.parameters(), grad_clip)
+            if norm > grad_clip:
+                n_clipped += 1
         optimizer.step()
 
         total_loss += loss.item()
@@ -63,7 +66,8 @@ def train_one_epoch(model, loader, criterion, optimizer, device, grad_clip=1.0):
     avg_loss = total_loss / max(n_batches, 1)
     for k in loss_components:
         loss_components[k] /= max(n_batches, 1)
-    return avg_loss, loss_components
+    clip_freq = n_clipped / max(n_batches, 1)
+    return avg_loss, loss_components, clip_freq
 
 
 @torch.no_grad()
@@ -208,7 +212,7 @@ def train(cfg, resume=False):
         epoch_start = time.time()
 
         # Train
-        train_loss, train_components = train_one_epoch(
+        train_loss, train_components, clip_freq = train_one_epoch(
             model, train_loader, criterion, optimizer, device,
             grad_clip=tcfg['grad_clip']
         )
@@ -231,6 +235,7 @@ def train(cfg, resume=False):
             'val_loss': val_loss,
             'lr': current_lr,
             'epoch_time_s': epoch_time,
+            'clip_frequency': clip_freq,
             **{f'train_{k}': v for k, v in train_components.items()},
             **{f'val_{k}': v for k, v in val_components.items()},
             **val_metrics,

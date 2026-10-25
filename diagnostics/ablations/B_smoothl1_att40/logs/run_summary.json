@@ -1,0 +1,15 @@
+{
+  "total_training_time_s": 1194.5753817558289,
+  "total_epochs": 49,
+  "best_epoch": 36,
+  "best_val_loss": 5.451875521212208,
+  "n_params": 55490,
+  "device": "cuda",
+  "gpu": "NVIDIA GeForce GTX 1650",
+  "N_TRAIN": 300000,
+  "N_VAL": 50000,
+  "N_TEST": 50000,
+  "seed": 42,
+  "pytorch_version": "2.5.1+cu121",
+  "python_version": "3.10.11 (tags/v3.10.11:7d4cc5a, Apr  5 2023, 00:38:17) [MSC v.1929 64 bit (AMD64)]"
+}

@@ -1,0 +1,413 @@
+{
+  "description": "Rigorous Jacobian, SVD, and identifiability audit of the 4-PLD ASL forward model",
+  "parameters": {
+    "plds": [
+      1.525,
+      2.025,
+      2.525,
+      3.025
+    ],
+    "tau": 1.8,
+    "T1t": 1.2,
+    "T1a": 1.66,
+    "alpha": 0.85,
+    "beta": 0.75,
+    "lmbda": 0.9,
+    "SCALE": 100000.0
+  },
+  "target_distribution_and_means": {
+    "n_total": 50000,
+    "n_early_att": 20426,
+    "frac_early_att": 0.40852,
+    "theoretical_prob_early": 0.41,
+    "theoretical_mean_early": 1.0125,
+    "observed_target_mean_early": 1.0104871988296509,
+    "observed_target_std_early": 0.29526782035827637,
+    "observed_pred_mean_early_original": 1.1960614919662476,
+    "observed_pred_mean_early_rebalanced": 1.2061928510665894,
+    "observed_pred_mean_late_original": 2.118555784225464,
+    "observed_pred_mean_late_rebalanced": 2.181042432785034,
+    "gamma_theoretical": 0.23092369477911645,
+    "decay_ratio_consecutive_plds": 0.6592406302004438
+  },
+  "jacobian_grid_analysis": [
+    {
+      "cbf": 20.0,
+      "att": 0.8,
+      "is_sub_min_pld": true,
+      "signals": [
+        165.100589353973,
+        108.84101657217782,
+        71.75242035669946,
+        47.302110814357704
+      ],
+      "singular_values": [
+        1085.2448554276402,
+        4.008476159286628e-14
+      ],
+      "condition_number": "inf",
+      "cosine_similarity": 1.0000000000000002,
+      "collinearity_angle_deg": 0.0,
+      "grad_norm_cbf_scaled": 1078.08245287678,
+      "grad_norm_att_scaled": 124.47739164741941,
+      "analytical_deriv_match_error": 1.7763568394002505e-14
+    },
+    {
+      "cbf": 20.0,
+      "att": 1.2,
+      "is_sub_min_pld": true,
+      "signals": [
+        181.07737000275236,
+        119.37355951565334,
+        78.69590060436951,
+        51.87953510861604
+      ],
+      "singular_values": [
+        1190.263977850091,
+        8.239155527099281e-14
+      ],
+      "condition_number": "inf",
+      "cosine_similarity": 1.0,
+      "collinearity_angle_deg": 0.0,
+      "grad_norm_cbf_scaled": 1182.4084697511457,
+      "grad_norm_att_scaled": 136.52306628652784,
+      "analytical_deriv_match_error": 2.842170943040401e-14
+    },
+    {
+      "cbf": 20.0,
+      "att": 1.525,
+      "is_sub_min_pld": true,
+      "signals": [
+        195.19022566999953,
+        128.67732737965736,
+        84.82932239427412,
+        55.92293595467789
+      ],
+      "singular_values": [
+        1283.031084667837,
+        4.519666331590172e-14
+      ],
+      "condition_number": "inf",
+      "cosine_similarity": 1.0,
+      "collinearity_angle_deg": 0.0,
+      "grad_norm_cbf_scaled": 1274.5633319135181,
+      "grad_norm_att_scaled": 147.16343691772562,
+      "analytical_deriv_match_error": 4.973799150320701e-14
+    },
+    {
+      "cbf": 20.0,
+      "att": 1.8,
+      "is_sub_min_pld": false,
+      "signals": [
+        153.15643758035878,
+        137.11389745409164,
+        90.39105216687439,
+        59.58945419497145
+      ],
+      "singular_values": [
+        1173.3323586538343,
+        330.19863094979047
+      ],
+      "condition_number": 3.553413759708318,
+      "cosine_similarity": -0.42868497372293096,
+      "collinearity_angle_deg": 115.3841341836945,
+      "grad_norm_cbf_scaled": 1161.6643298565932,
+      "grad_norm_att_scaled": 369.1557184767944,
+      "analytical_deriv_match_error": null
+    },
+    {
+      "cbf": 20.0,
+      "att": 2.2,
+      "is_sub_min_pld": false,
+      "signals": [
+        101.7886480130796,
+        124.11464628094436,
+        99.13819243289893,
+        65.35592445639715
+      ],
+      "singular_values": [
+        1039.8937619786661,
+        283.9094278604707
+      ],
+      "condition_number": 3.6627658680279165,
+      "cosine_similarity": -0.6863550151646949,
+      "collinearity_angle_deg": 133.3422648066823,
+      "grad_norm_cbf_scaled": 998.3129813113138,
+      "grad_norm_att_scaled": 406.63840297679616,
+      "analytical_deriv_match_error": null
+    },
+    {
+      "cbf": 20.0,
+      "att": 2.6,
+      "is_sub_min_pld": false,
+      "signals": [
+        59.62299026504693,
+        84.10947492782061,
+        100.25196050830105,
+        71.6804159268628
+      ],
+      "singular_values": [
+        870.4017262655849,
+        210.67113218190207
+      ],
+      "condition_number": 4.131566186837808,
+      "cosine_similarity": -0.8168261077194807,
+      "collinearity_angle_deg": 144.76832550333543,
+      "grad_norm_cbf_scaled": 803.39657632432,
+      "grad_norm_att_scaled": 395.6455890961955,
+      "analytical_deriv_match_error": null
+    },
+    {
+      "cbf": 50.0,
+      "att": 0.8,
+      "is_sub_min_pld": true,
+      "signals": [
+        412.75147338493247,
+        272.10254143044455,
+        179.38105089174863,
+        118.25527703589425
+      ],
+      "singular_values": [
+        1122.0976591396673,
+        9.158994060755168e-14
+      ],
+      "condition_number": "inf",
+      "cosine_similarity": 1.0000000000000002,
+      "collinearity_angle_deg": 0.0,
+      "grad_norm_cbf_scaled": 1078.08245287678,
+      "grad_norm_att_scaled": 311.19347911854845,
+      "analytical_deriv_match_error": 2.842170943040401e-14
+    },
+    {
+      "cbf": 50.0,
+      "att": 1.2,
+      "is_sub_min_pld": true,
+      "signals": [
+        452.69342500688083,
+        298.43389878913337,
+        196.73975151092375,
+        129.69883777154007
+      ],
+      "singular_values": [
+        1230.6830266221962,
+        2.7476982182265497e-13
+      ],
+      "condition_number": "inf",
+      "cosine_similarity": 1.0000000000000002,
+      "collinearity_angle_deg": 0.0,
+      "grad_norm_cbf_scaled": 1182.4084697511457,
+      "grad_norm_att_scaled": 341.30766571631943,
+      "analytical_deriv_match_error": 8.526512829121202e-14
+    },
+    {
+      "cbf": 50.0,
+      "att": 1.525,
+      "is_sub_min_pld": true,
+      "signals": [
+        487.9755641749988,
+        321.6933184491433,
+        212.07330598568527,
+        139.8073398866947
+      ],
+      "singular_values": [
+        1326.6003238890273,
+        1.3377567069683857e-13
+      ],
+      "condition_number": "inf",
+      "cosine_similarity": 1.0,
+      "collinearity_angle_deg": 0.0,
+      "grad_norm_cbf_scaled": 1274.5633319135181,
+      "grad_norm_att_scaled": 367.90859229431356,
+      "analytical_deriv_match_error": 5.684341886080802e-14
+    },
+    {
+      "cbf": 50.0,
+      "att": 1.8,
+      "is_sub_min_pld": false,
+      "signals": [
+        382.89109395089696,
+        342.7847436352291,
+        225.977630417186,
+        148.97363548742865
+      ],
+      "singular_values": [
+        1274.06383829219,
+        760.2302310767966
+      ],
+      "condition_number": 1.675892099801918,
+      "cosine_similarity": -0.4286849737229309,
+      "collinearity_angle_deg": 115.3841341836945,
+      "grad_norm_cbf_scaled": 1161.6643298565932,
+      "grad_norm_att_scaled": 922.889296191986,
+      "analytical_deriv_match_error": null
+    },
+    {
+      "cbf": 50.0,
+      "att": 2.2,
+      "is_sub_min_pld": false,
+      "signals": [
+        254.47162003269895,
+        310.28661570236085,
+        247.84548108224732,
+        163.38981114099286
+      ],
+      "singular_values": [
+        1308.3807822109982,
+        564.1240818672923
+      ],
+      "condition_number": 2.319313825214058,
+      "cosine_similarity": -0.6863550151646948,
+      "collinearity_angle_deg": 133.3422648066823,
+      "grad_norm_cbf_scaled": 998.3129813113138,
+      "grad_norm_att_scaled": 1016.5960074419903,
+      "analytical_deriv_match_error": null
+    },
+    {
+      "cbf": 50.0,
+      "att": 2.6,
+      "is_sub_min_pld": false,
+      "signals": [
+        149.05747566261732,
+        210.2736873195515,
+        250.62990127075255,
+        179.20103981715695
+      ],
+      "singular_values": [
+        1217.3700611027107,
+        376.56691868895444
+      ],
+      "condition_number": 3.2328120200815156,
+      "cosine_similarity": -0.8168261077194807,
+      "collinearity_angle_deg": 144.76832550333543,
+      "grad_norm_cbf_scaled": 803.39657632432,
+      "grad_norm_att_scaled": 989.1139727404886,
+      "analytical_deriv_match_error": null
+    },
+    {
+      "cbf": 80.0,
+      "att": 0.8,
+      "is_sub_min_pld": true,
+      "signals": [
+        660.402357415892,
+        435.3640662887113,
+        287.00968142679784,
+        189.20844325743082
+      ],
+      "singular_values": [
+        1187.5081943727105,
+        1.465313048140471e-13
+      ],
+      "condition_number": "inf",
+      "cosine_similarity": 1.0000000000000002,
+      "collinearity_angle_deg": 0.0,
+      "grad_norm_cbf_scaled": 1078.08245287678,
+      "grad_norm_att_scaled": 497.90956658967764,
+      "analytical_deriv_match_error": 7.105427357601002e-14
+    },
+    {
+      "cbf": 80.0,
+      "att": 1.2,
+      "is_sub_min_pld": true,
+      "signals": [
+        724.3094800110094,
+        477.49423806261336,
+        314.78360241747805,
+        207.51814043446416
+      ],
+      "singular_values": [
+        1302.423338009442,
+        3.011853287825424e-13
+      ],
+      "condition_number": "inf",
+      "cosine_similarity": 1.0,
+      "collinearity_angle_deg": 0.0,
+      "grad_norm_cbf_scaled": 1182.4084697511457,
+      "grad_norm_att_scaled": 546.0922651461113,
+      "analytical_deriv_match_error": 1.1368683772161603e-13
+    },
+    {
+      "cbf": 80.0,
+      "att": 1.525,
+      "is_sub_min_pld": true,
+      "signals": [
+        780.7609026799981,
+        514.7093095186294,
+        339.31728957709646,
+        223.69174381871156
+      ],
+      "singular_values": [
+        1403.931950525198,
+        1.6521804760088374e-13
+      ],
+      "condition_number": "inf",
+      "cosine_similarity": 1.0,
+      "collinearity_angle_deg": 0.0,
+      "grad_norm_cbf_scaled": 1274.5633319135181,
+      "grad_norm_att_scaled": 588.6537476709025,
+      "analytical_deriv_match_error": 1.9895196601282805e-13
+    },
+    {
+      "cbf": 80.0,
+      "att": 1.8,
+      "is_sub_min_pld": false,
+      "signals": [
+        612.6257503214351,
+        548.4555898163666,
+        361.56420866749755,
+        238.3578167798858
+      ],
+      "singular_values": [
+        1615.406288127684,
+        959.344386174536
+      ],
+      "condition_number": 1.6838648470850477,
+      "cosine_similarity": -0.42868497372293096,
+      "collinearity_angle_deg": 115.3841341836945,
+      "grad_norm_cbf_scaled": 1161.6643298565932,
+      "grad_norm_att_scaled": 1476.6228739071776,
+      "analytical_deriv_match_error": null
+    },
+    {
+      "cbf": 80.0,
+      "att": 2.2,
+      "is_sub_min_pld": false,
+      "signals": [
+        407.1545920523184,
+        496.4585851237774,
+        396.55276973159573,
+        261.4236978255886
+      ],
+      "singular_values": [
+        1790.9507937289927,
+        659.3942034204448
+      ],
+      "condition_number": 2.7160548036953878,
+      "cosine_similarity": -0.6863550151646949,
+      "collinearity_angle_deg": 133.3422648066823,
+      "grad_norm_cbf_scaled": 998.3129813113138,
+      "grad_norm_att_scaled": 1626.5536119071846,
+      "analytical_deriv_match_error": null
+    },
+    {
+      "cbf": 80.0,
+      "att": 2.6,
+      "is_sub_min_pld": false,
+      "signals": [
+        238.49196106018772,
+        336.43789971128245,
+        401.0078420332042,
+        286.7216637074512
+      ],
+      "singular_values": [
+        1723.0206937122066,
+        425.690806371895
+      ],
+      "condition_number": 4.0475872814761455,
+      "cosine_similarity": -0.8168261077194807,
+      "collinearity_angle_deg": 144.76832550333543,
+      "grad_norm_cbf_scaled": 803.39657632432,
+      "grad_norm_att_scaled": 1582.582356384782,
+      "analytical_deriv_match_error": null
+    }
+  ]
+}
