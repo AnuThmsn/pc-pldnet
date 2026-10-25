@@ -20,15 +20,17 @@ class PhysicsConsistencyLoss(nn.Module):
     the differentiable forward model and compare against measured signals.
     """
 
-    def __init__(self, forward_model, X_mean, X_std):
+    def __init__(self, forward_model, X_mean, X_std, loss_type='L1'):
         """
         Args:
             forward_model: ASLForwardModel instance
             X_mean: (1, 4) training mean for denormalization
             X_std: (1, 4) training std for denormalization
+            loss_type: 'L1' (linear, preserves gradient) or 'SmoothL1'
         """
         super().__init__()
         self.forward_model = forward_model
+        self.loss_type = loss_type
         self.register_buffer('X_mean', torch.as_tensor(X_mean, dtype=torch.float32))
         self.register_buffer('X_std', torch.as_tensor(X_std, dtype=torch.float32))
 
@@ -49,9 +51,12 @@ class PhysicsConsistencyLoss(nn.Module):
         # expected_obs = 2 * clean_signal (since X = mc + ml ≈ 2*S for reasonable SNR)
         x_reconstructed = self.forward_model.expected_observation(cbf_pred, att_pred)  # (B, 4)
 
-        # Normalized SmoothL1 loss (normalize by mean signal to make scale-invariant)
+        # Normalized reconstruction loss
         scale = x_raw.abs().mean(dim=1, keepdim=True).clamp(min=1.0)  # (B, 1)
-        loss = F.smooth_l1_loss(x_reconstructed / scale, x_raw / scale)
+        if self.loss_type == 'SmoothL1':
+            loss = F.smooth_l1_loss(x_reconstructed / scale, x_raw / scale)
+        else:
+            loss = F.l1_loss(x_reconstructed / scale, x_raw / scale)
 
         return loss
 
@@ -69,10 +74,17 @@ class PCPLDNetLoss(nn.Module):
         self.att_weight = tcfg['att_loss_weight']
         self.physics_lambda = tcfg['physics_lambda']
 
-        self.cbf_loss_fn = nn.SmoothL1Loss(beta=tcfg['smoothl1_beta'])
-        self.att_loss_fn = nn.SmoothL1Loss(beta=tcfg['smoothl1_beta'])
+        reg_type = tcfg.get('regression_loss', 'SmoothL1')
+        if reg_type in ('L1', 'MAE'):
+            self.cbf_loss_fn = nn.L1Loss()
+            self.att_loss_fn = nn.L1Loss()
+        else:
+            beta = tcfg.get('smoothl1_beta', 1.0)
+            self.cbf_loss_fn = nn.SmoothL1Loss(beta=beta)
+            self.att_loss_fn = nn.SmoothL1Loss(beta=beta)
 
-        self.physics_loss = PhysicsConsistencyLoss(forward_model, X_mean, X_std)
+        phys_loss_type = tcfg.get('physics_loss_type', 'L1')
+        self.physics_loss = PhysicsConsistencyLoss(forward_model, X_mean, X_std, loss_type=phys_loss_type)
 
     def forward(self, cbf_pred, att_pred, cbf_true, att_true, x_normalized):
         """

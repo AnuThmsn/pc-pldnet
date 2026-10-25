@@ -112,9 +112,16 @@ def validate(model, loader, criterion, device):
 def train(cfg, resume=False):
     """Main training function."""
     project_dir = Path(__file__).resolve().parent.parent
-    ckpt_dir = project_dir / 'models' / 'checkpoints'
-    final_dir = project_dir / 'models' / 'final'
-    log_dir = project_dir / 'experiments' / 'logs'
+    custom_dir = cfg.get('training', {}).get('output_dir', None)
+    if custom_dir:
+        base_out = project_dir / custom_dir
+        ckpt_dir = base_out / 'checkpoints'
+        final_dir = base_out / 'final'
+        log_dir = base_out / 'logs'
+    else:
+        ckpt_dir = project_dir / 'models' / 'checkpoints'
+        final_dir = project_dir / 'models' / 'final'
+        log_dir = project_dir / 'experiments' / 'logs'
 
     for d in [ckpt_dir, final_dir, log_dir]:
         d.mkdir(parents=True, exist_ok=True)

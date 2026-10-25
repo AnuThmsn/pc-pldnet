@@ -32,8 +32,16 @@ from src.metrics import (compute_all_metrics, compute_snr_stratified_metrics,
 
 def evaluate(cfg):
     project_dir = Path(__file__).resolve().parent.parent
-    final_dir = project_dir / 'models' / 'final'
-    results_dir = project_dir / 'experiments'
+    custom_eval_dir = cfg.get('evaluation', {}).get('output_dir', None)
+    custom_model_dir = cfg.get('evaluation', {}).get('model_dir', None)
+    if custom_eval_dir:
+        results_dir = project_dir / custom_eval_dir
+    else:
+        results_dir = project_dir / 'experiments'
+    if custom_model_dir:
+        final_dir = project_dir / custom_model_dir
+    else:
+        final_dir = project_dir / 'models' / 'final'
     metrics_dir = results_dir / 'metrics'
     pred_dir = results_dir / 'predictions'
     fig_dir = results_dir / 'figures'

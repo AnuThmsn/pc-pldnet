@@ -1,0 +1,72 @@
+# PC-PLDNet Rebalanced Configuration
+# Addresses Confirmed Defect 1 (Multi-Task Loss Imbalance) and Defect 2 (Physics Gradient Vanishing)
+
+physics:
+  plds: [1.525, 2.025, 2.525, 3.025]
+  tau: 1.8
+  T1t: 1.2
+  T1a: 1.66
+  alpha: 0.85
+  beta: 0.75
+  lmbda: 0.9
+  SCALE: 100000.0
+  SIG_REF_SC: 334.2039
+
+targets:
+  CBF_MIN: 0.0
+  CBF_MAX: 100.0
+  ATT_MIN: 0.5
+  ATT_MAX: 3.0
+
+dataset:
+  N_TRAIN: 300000
+  N_VAL:   50000
+  N_TEST:  50000
+  N_NOISE_LEVELS_TRAIN: 100
+  N_NOISE_LEVELS_VAL:   100
+  N_NOISE_LEVELS_TEST:  51
+  seed_train: 42
+  seed_val:   99
+  seed_test:  7
+
+model:
+  pld_embed_dim: 16
+  signal_embed_dim: 32
+  token_dim: 48
+  conv_channels: [48, 64]
+  conv_kernel_size: 3
+  attn_heads: 4
+  attn_dim: 64
+  attn_dropout: 0.05
+  shared_hidden: [128, 64]
+  shared_dropout: 0.1
+  cbf_head_hidden: [32]
+  att_head_hidden: [32]
+
+training:
+  optimizer: AdamW
+  lr: 0.001
+  weight_decay: 0.00001
+  batch_size: 512
+  max_epochs: 100
+  early_stopping_patience: 12
+  scheduler: ReduceLROnPlateau
+  scheduler_factor: 0.5
+  scheduler_patience: 5
+  scheduler_min_lr: 0.000001
+
+  # Targeted Corrections:
+  regression_loss: L1            # Matches baseline L1 loss, removes quadratic dead zone for ATT < 1.0
+  att_loss_weight: 40.0          # Balances gradient norms ~1:1 based on target scale ratio (28.86 / 0.72)
+  physics_loss_type: L1          # Linear scale prevents quadratic denominator squashing
+  physics_lambda: 0.5            # Provides balanced physical regularization (~15% of supervised gradient)
+
+  seed: 42
+  grad_clip: 1.0
+  output_dir: diagnostics/rebalanced
+
+evaluation:
+  snr_levels: [10, 15, 20]
+  output_dir: diagnostics/rebalanced/experiments
+  model_dir: diagnostics/rebalanced/final
+

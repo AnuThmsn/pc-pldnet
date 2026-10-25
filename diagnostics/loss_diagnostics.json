@@ -1,0 +1,34 @@
+{
+  "loss_magnitudes": {
+    "mean_L_CBF_unweighted": 2.877834343910217,
+    "std_L_CBF": 0.05781418853221711,
+    "mean_L_ATT_unweighted": 0.06523746140301227,
+    "std_L_ATT": 0.003944401575352595,
+    "mean_L_physics_unweighted": 0.017042314138961956,
+    "std_L_physics": 0.0038894982189383804,
+    "mean_L_total": 3.008479690551758
+  },
+  "weighted_contributions": {
+    "weight_CBF": 1.0,
+    "weight_ATT": 2.0,
+    "weight_physics": 0.01,
+    "weighted_L_CBF": 2.877834343910217,
+    "weighted_L_ATT": 0.13047492280602455,
+    "weighted_L_physics": 0.00017042314138961955,
+    "fraction_L_CBF_pct": 95.65742968490518,
+    "fraction_L_ATT_pct": 4.336905555516612,
+    "fraction_L_physics_pct": 0.005664759578206904
+  },
+  "gradient_norms": {
+    "mean_grad_norm_CBF": 8.278729343414307,
+    "std_grad_norm_CBF": 1.5291046489228264,
+    "mean_grad_norm_ATT": 0.18885670155286788,
+    "std_grad_norm_ATT": 0.04338018515288404,
+    "mean_grad_norm_physics": 0.0011809978925157339,
+    "std_grad_norm_physics": 0.0006771609999011003,
+    "ratio_CBF_to_ATT_grad": 43.83603460709835,
+    "ratio_CBF_to_physics_grad": 7009.884858414707
+  },
+  "n_batches_evaluated": 10,
+  "batch_size": 1024
+}
